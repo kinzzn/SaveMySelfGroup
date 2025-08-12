@@ -183,5 +183,7 @@ def modify_markdown_file(filepath):
 # Example usage:
 # Assuming your file is located at './01_TalkAboutBMSG/03.md' relative to where the script is run.
 # You can change this path if your file is elsewhere.
-file_to_modify = './01_TalkAboutBMSG/03.md'
-modify_markdown_file(file_to_modify)
+# file_to_modify = './01_TalkAboutBMSG/03.md'
+files = ["./01_TalkAboutBMSG/05_SOTA.md", "./01_TalkAboutBMSG/06_SHUNTO.md", "./01_TalkAboutBMSG/07_MANATO.md", "./01_TalkAboutBMSG/08_RYUHEI.md", "./01_TalkAboutBMSG/09_JUNON.md", "./01_TalkAboutBMSG/10_RYOKI.md", "./01_TalkAboutBMSG/11_LEO.md", "./01_TalkAboutBMSG/12_KAIRYU.md", "./01_TalkAboutBMSG/13_NAOYA.md", "./01_TalkAboutBMSG/14_RAN.md", "./01_TalkAboutBMSG/15_SEITO.md", "./01_TalkAboutBMSG/16_RYUKI.md", "./01_TalkAboutBMSG/17_TAKUTO.md", "./01_TalkAboutBMSG/18_HAYATO.md", "./01_TalkAboutBMSG/19_EIKI.md"]
+for file_to_modify in files:
+    modify_markdown_file(file_to_modify)
