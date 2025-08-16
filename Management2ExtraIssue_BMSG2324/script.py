@@ -183,5 +183,7 @@ def modify_markdown_file(filepath):
 # Example usage:
 # Assuming your file is located at './01_TalkAboutBMSG/03.md' relative to where the script is run.
 # You can change this path if your file is elsewhere.
-file_to_modify = './01_TalkAboutBMSG/03.md'
-modify_markdown_file(file_to_modify)
+# file_to_modify = './01_TalkAboutBMSG/03.md'
+files = ["./01_TalkAboutBMSG/18_HAYATO.md",]
+for file_to_modify in files:
+    modify_markdown_file(file_to_modify)
