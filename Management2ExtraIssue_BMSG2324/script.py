@@ -185,19 +185,19 @@ def modify_markdown_file(filepath):
 # You can change this path if your file is elsewhere.
 # file_to_modify = './01_TalkAboutBMSG/03.md'
 files = [
-    './01_TalkAboutBMSG/20_RUI.md',
-    './01_TalkAboutBMSG/21_TAIKI.md',
-    './01_TalkAboutBMSG/22_KANON.md',
-    './01_TalkAboutBMSG/23_Trainee.md',
-    './02_Interview/01_NovelCore/01_NovelCore.md',
+    # './01_TalkAboutBMSG/20_RUI.md',
+    # './01_TalkAboutBMSG/21_TAIKI.md',
+    # './01_TalkAboutBMSG/22_KANON.md',
+    # './01_TalkAboutBMSG/23_Trainee.md',
+    # './02_Interview/01_NovelCore/01_NovelCore.md',
     './02_Interview/02_BEFIRST/01_BefirstMemberInterview.md',
-    './02_Interview/02_BEFIRST/02_BefirstGroupInterview.md',
-    './02_Interview/02_BEFIRST/03_SkyHiInterviewAboutBefirst.md',
-    './02_Interview/03_MAZZEL/01_MazzelMemberInterview.md',
-    './02_Interview/03_MAZZEL/02_MazzelGroupInterview.md',
-    './02_Interview/03_MAZZEL/03_SkyhiInterviewAboutMazzel.md',
-    './03_Chronicle/01_Chronicle.md',
-    './04_EditorsNote/04_EditorsNote.md',
+    # './02_Interview/02_BEFIRST/02_BefirstGroupInterview.md',
+    # './02_Interview/02_BEFIRST/03_SkyHiInterviewAboutBefirst.md',
+    # './02_Interview/03_MAZZEL/01_MazzelMemberInterview.md',
+    # './02_Interview/03_MAZZEL/02_MazzelGroupInterview.md',
+    # './02_Interview/03_MAZZEL/03_SkyhiInterviewAboutMazzel.md',
+    # './03_Chronicle/01_Chronicle.md',
+    # './04_EditorsNote/04_EditorsNote.md',
 ]
 for file_to_modify in files:
     modify_markdown_file(file_to_modify)
