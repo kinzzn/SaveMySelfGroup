@@ -1,1 +1,0 @@
-import{_ as a,c as t,o,ae as r}from"./chunks/framework.Bi6zybwU.js";const _=JSON.parse('{"title":"SaveMySelfGroup","description":"","frontmatter":{},"headers":[],"relativePath":"README.md","filePath":"README.md"}'),l={name:"README.md"};function n(s,e,i,c,d,p){return o(),t("div",null,[...e[0]||(e[0]=[r("",5)])])}const f=a(l,[["render",n]]);export{_ as __pageData,f as default};

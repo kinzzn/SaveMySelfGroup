@@ -1,0 +1,1 @@
+import{_ as a,c as t,o as n,ae as o}from"./chunks/framework.BvcDoAct.js";const _=JSON.parse('{"title":"SaveMySelfGroup","description":"","frontmatter":{},"headers":[],"relativePath":"index.md","filePath":"index.md"}'),r={name:"index.md"};function l(i,e,s,d,c,p){return n(),t("div",null,[...e[0]||(e[0]=[o("",5)])])}const f=a(r,[["render",l]]);export{_ as __pageData,f as default};
