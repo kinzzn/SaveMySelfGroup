@@ -2,7 +2,7 @@
 
 # Buy
 - [amazon.co.jp](https://www.amazon.co.jp/%E6%97%A5%E6%9C%AC%E3%81%AE%E9%9F%B3%E6%A5%BD%E3%81%AF%E4%B8%96%E7%95%8C%E3%81%B8%E3%81%AE%E5%A3%81%E3%82%92%E8%B6%8A%E3%81%88%E3%82%89%E3%82%8C%E3%82%8B%E3%81%AE%E3%81%8B-%E3%83%9E%E3%83%8D%E3%82%B8%E3%83%A1%E3%83%B3%E3%83%88%E3%81%AE%E3%81%AF%E3%81%AA%E3%81%97%E3%80%822-SKY-HI/dp/4296206613)
-- [bmsg official shop]()
+
 <br/><br/><br/><br/>
 # Contents
 
