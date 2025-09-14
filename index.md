@@ -1,5 +1,5 @@
 # SaveMySelfGroup
-Save BMSG(=BeMySelfGroup) related documents archieve.
+Save BMSG(=BeMySelfGroup) related documents archieve
 
 Translated in Chinese.
 
