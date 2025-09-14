@@ -8,6 +8,11 @@ on:
       - main # 在 main 分支有新提交时触发
   workflow_dispatch: # 允许手动触发部署
 
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
