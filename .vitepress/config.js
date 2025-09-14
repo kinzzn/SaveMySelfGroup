@@ -2,6 +2,7 @@
 import { defineConfig } from 'vitepress'
 
 export default defineConfig({
+    base: '/SaveMySelfGroup/',
     title: 'Save My Self Project',
     description: 'BMSG Archieve',
     head: [
