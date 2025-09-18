@@ -1,7 +1,7 @@
 Talk about BMSG - 10
 # RYOKI (BE:FIRST)
 
-### 「Be MySelf Group」と掲げることで守りに入ることを戒めていると感じる
+### 「Be MySelf Group」と掲げることで 守りに入ることを戒めていると感じる
 
 *RYOKI: 1999年4月26日生まれ、愛知県出身*
 <br/><br/><br/>
