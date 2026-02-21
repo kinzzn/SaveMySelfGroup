@@ -31,19 +31,19 @@ edhiii boi 『Flower』 配信リリース
 初の「D.U.N.K. Showcase」開催
 
 03/15 
-Aile The Shota [FANCITY feat. Soulflex - 
+Aile The Shota 『FANCITY feat. Soulflex』 配信リリース
 
 03/22 
-edhiii boi 1st Album Tedhiii boi is here] -7 
+edhiii boi 1st Album 『edhiii boi is here』 リリース
 
 03/31 
-MAZZEL Pre-Debut Single [MISSION] - 
+MAZZEL Pre-Debut Single 『MISSION』 配信リリース
 
 04/20 
-Novel Core iCON TOUR 2023] X-t 
+Novel Core 『iCON TOUR 2023』スタート 
 
 04/26 
-BE:FIRST 3rd Single [Smile Again '-7 
+BE:FIRST 3rd Single 『Smile Again』 リリース
 
 05/13 
 YouTube にて音楽番組 「D.U.N.K.」 配信開始 
@@ -52,41 +52,39 @@ YouTube にて音楽番組 「D.U.N.K.」 配信開始
 MAZZEL Debut Single 『Vivid』 でデビュー 
 
 05/27 
-SKY-HI PIJ−+"7 – [SKY-HI ARENA TOUR 2023 –BOSSDOM-J79−| 
+SKY-HI アリーナツアー 「SKY-HI ARENA TOUR 2023 –BOSSDOM-」スタート 
 
 05/31 
-SKY-HI Dream Out Loud feat. ØZIJ 21'))-> 
+SKY-HI 『Dream Out Loud feat. ØZI』 配信リリース
 
 06/12 
-BE:FIRST [Bye-Good-Bye - From THE FIRST TAKEJ 21')')—7 
+BE:FIRST 『Bye-Good-Bye - From THE FIRST TAKE』 配信リリース
 
-06/19 
+06/19
+BE:FIRST 『Smile Again - From THE FIRST TAKE』 配信リリース
 
 07/02 
+Aile The Shota 初のワンマンツアー「Aile The Shota -1st Oneman Tour-」スタート 
 
 07/05 
+Aile The Shota 『No Frontier』 配信リリース
 
 07/19 
+Novel Core & THE WILL RABBITS 1st Single 『BYE BYE』 リリース
 
 08/09 
+Aile The Shota 『Pandora』 配信リリース
 
 08/14 
+MAZZEL 『LIGHTNING』 配信リリース
 
-08/21 
-BE:FIRST [Smile Again - From THE FIRST TAKEJ ¿144–7 
-Aile The Shota 7-[Aile The Shota -1st Oneman Tour- - 
-Aile The Shota No Frontier 1Ē!))) −z 
-Novel Core & THE WILL RABBITS 1st Single [BYE BYEJ 'J')—7 
-Aile The Shota Pandora 21-7 
-MAZZEL LIGHTNING 1-7 
-RUIKANON 『声』リリース 
-
-177 
+08/21  
+RUI·KANON 『声』リリース 
 
 08/30 
+SKY-HI/BE:FIRST スプリットシングル『Sarracenia / Salvia』リリース 
 
 09/01 
-SKY-HI/BE:FIRST 77 [Sarracenia / Salvial -7 
 REIKO 『No More』 配信リリース 
 
 09/06 
