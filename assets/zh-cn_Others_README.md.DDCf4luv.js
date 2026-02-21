@@ -1,0 +1,1 @@
+import{_ as e,c as t,o as r}from"./chunks/framework.BvcDoAct.js";const i=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"zh-cn/Others/README.md","filePath":"zh-cn/Others/README.md"}'),a={name:"zh-cn/Others/README.md"};function s(c,n,o,p,_,d){return r(),t("div")}const m=e(a,[["render",s]]);export{i as __pageData,m as default};
