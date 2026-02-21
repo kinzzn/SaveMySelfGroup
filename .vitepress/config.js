@@ -39,6 +39,10 @@ export default defineConfig({
                     {
                         text: 'Management 2',
                         link: '/zh-cn/Management2/README'
+                    },
+                    {
+                        text: '其他',
+                        link: '/zh-cn/Others/README'
                     }
                 ],
                 sidebar: {
@@ -198,6 +202,21 @@ export default defineConfig({
                                 }
                             ]
                         },
+                    ],
+                    '/zh-cn/Others': [
+                        {
+                            
+                            items: [
+                                {
+                                    text: '机动战士高达GQuuuuuuX OST 采访',
+                                    link: '/zh-cn/Others/gqux'
+                                },
+                                {
+                                    text: '川谷绘音 2025 音乐回顾',
+                                    link: '/zh-cn/Others/rollingkawatani'
+                                }
+                            ]
+                        }
                     ]
                 }
             }
