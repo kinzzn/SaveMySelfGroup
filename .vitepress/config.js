@@ -46,6 +46,12 @@ export default defineConfig({
                     }
                 ],
                 sidebar: {
+                     '/zh-cn/Management2/':[
+                         {
+                            text: 'NoNoGirls: 迈向更理想形态的女团选秀',
+                            link: '/zh-cn/Management2/PART3/NoNoGirls'
+                         }
+                     ],
                     '/zh-cn/Management2Extra/': [
                         {
                             text: 'SKY-HI管理的故事2 BMSG增刊',
