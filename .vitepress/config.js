@@ -55,7 +55,12 @@ function getDisplayName(fileName) {
         '02_MazzelGroupInterview': '团体采访',
         '03_SkyhiInterviewAboutMazzel': 'SKY-HI谈论MAZZEL',
         'gqux': '为《机动战士高达GQuuuuuuX》增添色彩的音乐',
-        'rollingkawatani': '川谷绘音回顾 2025 年的音乐生态'   
+        'rollingkawatani': '川谷绘音回顾 2025 年的音乐生态',
+        // 新增
+        '前言': '前言',
+        '目录': '目录',
+        '0': 'PART1 SKY-HI 特别访谈',
+        '1': '持续高速成长的第五年BMSG'
     }
     
     // 移除文件扩展名
