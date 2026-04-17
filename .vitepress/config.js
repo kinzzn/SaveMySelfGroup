@@ -59,8 +59,6 @@ function getDisplayName(fileName) {
         // 新增
         '前言': '前言',
         '目录': '目录',
-        '0': 'PART1 SKY-HI 特别访谈',
-        '1': '持续高速成长的第五年BMSG'
     }
     
     // 移除文件扩展名
