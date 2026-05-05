@@ -133,7 +133,14 @@ function generateNavigation(locale) {
             link: `/${locale}/Others/README`
         })
     }
-    
+
+    if (existsSync(join(baseDir, 'RockInOnJapan_BF'))) {
+        navItems.push({
+            text: 'RockInOnJapan BE:FIRST',
+            link: `/${locale}/RockInOnJapan_BF/README`
+        })
+    }
+
     return navItems
 }
 
@@ -178,6 +185,19 @@ function generateSidebarConfig(locale) {
             }]
         }
     }
+
+    // RockInOnJapan_BF
+    if (existsSync(join(baseDir, 'RockInOnJapan_BF'))) {
+        const othersItems = generateSidebar(
+            join(baseDir, 'RockInOnJapan_BF'), 
+            `/${locale}/RockInOnJapan_BF`
+        )
+        if (othersItems.length > 0) {
+            sidebarConfig[`/${locale}/RockInOnJapan_BF/`] = [{
+                items: othersItems
+            }]
+        }
+    }
     
     return sidebarConfig
 }
@@ -190,12 +210,22 @@ export default defineConfig({
         ['link', { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' }]
     ],
     locales: {
-        root: {
+        'root': {
+            locale: 'zh-CN',
             label: '中文',
-            lang: 'zh-CN',
-            link: '/',
+            link: '/zh-cn/README',
             themeConfig: {
-                nav: generateNavigation('zh-cn')
+                nav: generateNavigation('zh-cn'),
+                sidebar: generateSidebarConfig('zh-cn')
+            }
+        },
+        'ja-jp': {
+            locale: 'ja-JP',
+            label: '日本語',
+            link: '/ja-jp/README',
+            themeConfig: {
+                nav: generateNavigation('ja-jp'),
+                sidebar: generateSidebarConfig('ja-jp')
             }
         },
         'zh-cn': {
