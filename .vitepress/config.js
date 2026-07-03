@@ -141,6 +141,11 @@ function generateNavigation(locale) {
         })
     }
 
+    navItems.push({
+        text: '校对',
+        link: '/proofread'
+    })
+
     return navItems
 }
 

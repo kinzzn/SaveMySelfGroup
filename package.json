@@ -2,7 +2,7 @@
   "name": "be_myself_group_archieve",
   "version": "1.0.0",
   "description": "Save BMSG(=BeMySelfGroup) related documents",
-  "type": "module",  
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "docs:dev": "vitepress dev .",
