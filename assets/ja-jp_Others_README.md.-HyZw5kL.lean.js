@@ -1,0 +1,1 @@
+import{_ as e,c as t,o as a}from"./chunks/framework.Ch_PcVtW.js";const m=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"ja-jp/Others/README.md","filePath":"ja-jp/Others/README.md"}'),r={name:"ja-jp/Others/README.md"};function s(o,c,n,p,_,d){return a(),t("div")}const E=e(r,[["render",s]]);export{m as __pageData,E as default};
