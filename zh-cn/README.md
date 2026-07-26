@@ -6,4 +6,5 @@
   - Management2
   - Management2Extra
 - 采访
+  - Rockin On Japan 2025/11
 - 视频
