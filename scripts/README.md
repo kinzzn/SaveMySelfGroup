@@ -23,9 +23,9 @@ node translate.cjs --init "你的全局背景信息"
 ```
 
 作用：
-- 扫描 `source/*.md`
+- 扫描 `source/` 顶层及一层子目录中的 `.md`
 - 生成全局风格指南：`prompts/style_guide.md`
-- 为每篇生成摘要：`output/<篇名>/0_context_summary.md`
+- 为每篇生成摘要：`output/<相对目录>/<篇名>/0_context_summary.md`
 - 合并外部 context + 每篇摘要（+style_guide）并写入：`output/file_contexts.json`
 
 ### 2.2 批量处理
@@ -35,9 +35,9 @@ node translate.cjs --batch "你的全局背景信息"
 ```
 
 作用：
-- 读取 `source/*.md`
+- 读取 `source/` 顶层及一层子目录中的 `.md`
 - 按篇顺序执行：翻译 → 编辑 → 校对
-- 每篇输出写入独立目录：`output/<篇名>/`
+- 每篇输出写入独立目录：`output/<相对目录>/<篇名>/`
 
 ### 2.3 单篇处理
 
@@ -55,16 +55,16 @@ node translate.cjs source/0_INTRO.md "你的全局背景信息"
 
 ### 3.1 输入目录
 
-- 原文：`source/*.md`
+- 原文：`source/` 顶层及一层子目录中的 `.md`（例如 `source/PART2/0.md`）
 - 提示词：
   - `prompts/translation_expert.md`
   - `prompts/editing_expert.md`
   - `prompts/proofreading_expert.md`
   - `prompts/init_expert.md`
 
-### 3.2 输出目录（按篇分文件夹）
+### 3.2 输出目录（按原文相对路径分文件夹）
 
-每篇会生成如下文件（示例：`output/0_INTRO/`）：
+每篇会生成如下文件（示例：`source/PART2/0.md` 对应 `output/PART2/0/`）：
 
 - `0_context_summary.md`（仅 init 阶段）
 - `tmp_trans_input.md`
@@ -88,10 +88,12 @@ node translate.cjs source/0_INTRO.md "你的全局背景信息"
 
 ### 4.1 `--init`
 
-1. 读取 `source/*.md` 的抽样文本
+1. 读取 `source/` 顶层及一层子目录中 `.md` 的抽样文本
 2. 套用 `prompts/init_expert.md`，调用 Claude 生成 `prompts/style_guide.md`
 3. 对每篇生成内容摘要并保存到 `output/<篇名>/0_context_summary.md`
 4. 合并成每篇 `combinedContext`，写入 `output/file_contexts.json`
+
+为兼容 Windows 命令行长度限制，风格指南输入会在全部文件间均匀抽样，总计最多约 24000 字符；单篇摘要最多读取原文前 20000 字符。初始化阶段由 Node.js 直接接收 Claude 输出并写入文件，不依赖 Claude 的 Read/Write 工具。
 
 ### 4.2 `--batch` / 单篇
 
@@ -123,7 +125,7 @@ node translate.cjs source/0_INTRO.md "你的全局背景信息"
 `translate.cjs` 主要函数：
 
 - `runInit()`：执行初始化总流程
-- `runBatch()`：批量遍历并处理全部 source 文件
+- `runBatch()`：批量遍历并处理 source 顶层及一层子目录中的全部 Markdown 文件
 - `runSingle()`：单篇处理
 - `runPipelineForFile()`：单篇三阶段流水线核心
 - `generateGlobalStyleGuide()`：全局术语与风格指南生成
@@ -135,6 +137,16 @@ node translate.cjs source/0_INTRO.md "你的全局背景信息"
 ## 6. 运行前检查
 
 - 本机可直接执行 `claude` 命令
+- 默认使用 `claude-opus-4-6`，避免 Claude CLI 的 Auto 模式路由错误
 - 已在当前仓库目录运行
-- `source/` 中有待处理 `.md` 文件
+- `source/` 顶层或一层子目录中有待处理 `.md` 文件
 - `prompts/` 下各提示词文件存在
+
+如需使用其他模型，可在运行前设置 `CLAUDE_MODEL`：
+
+```powershell
+$env:CLAUDE_MODEL = "claude-sonnet-4-6"
+node translate.cjs --init "你的全局背景信息"
+```
+
+若出现 `Auto mode needs a prompt or a command to route a request`，说明 Claude CLI 经由 VS Code/Agent Maestro 使用了 Auto 路由。当前脚本会显式传入 `claude-opus-4-6`；请勿将 `CLAUDE_MODEL` 设置为 `auto`。

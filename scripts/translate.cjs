@@ -11,6 +11,9 @@ const IS_BATCH_MODE = modeArg === '--batch';
 const SOURCE_DIR = 'source';
 const OUTPUT_DIR = 'output';
 const PROMPTS_DIR = 'prompts';
+const CLAUDE_MODEL = process.env.CLAUDE_MODEL || 'claude-opus-4-6';
+const MAX_STYLE_SOURCE_CHARS = 24000;
+const MAX_CONTEXT_SOURCE_CHARS = 20000;
 
 const DEFAULT_SOURCE_FILE = 'source/chapter1.md';
 const SOURCE_FILE = (!IS_INIT_MODE && !IS_BATCH_MODE) ? (args[0] || DEFAULT_SOURCE_FILE) : '';
@@ -47,7 +50,7 @@ function toPromptPath(filePath) {
 }
 
 function runClaude(argsList, stepName) {
-  const result = spawnSync('claude', ['--permission-mode', 'bypassPermissions', ...argsList], {
+  const result = spawnSync('claude', ['--model', CLAUDE_MODEL, '--permission-mode', 'bypassPermissions', ...argsList], {
     stdio: 'inherit',
     cwd: process.cwd(),
   });
@@ -61,15 +64,54 @@ function runClaude(argsList, stepName) {
   }
 }
 
+function runClaudeText(prompt, stepName) {
+  const result = spawnSync(
+    'claude',
+    ['--model', CLAUDE_MODEL, '--permission-mode', 'bypassPermissions', '--tools', '', '-p', prompt],
+    {
+      encoding: 'utf8',
+      maxBuffer: 20 * 1024 * 1024,
+      cwd: process.cwd(),
+    }
+  );
+
+  if (result.error) {
+    throw new Error(`[${stepName}] 执行失败: ${result.error.message}`);
+  }
+
+  if (result.status !== 0) {
+    throw new Error(`[${stepName}] 退出码异常: ${result.status}\n${result.stderr || ''}`);
+  }
+
+  const output = result.stdout.trim();
+  if (!output) {
+    throw new Error(`[${stepName}] Claude 未返回内容。请确认 Agent Maestro 使用的是明确模型，而不是 Auto。`);
+  }
+
+  return output;
+}
+
 function listSourceMarkdownFiles() {
   if (!fs.existsSync(SOURCE_DIR)) {
     throw new Error(`找不到源文件目录: ${SOURCE_DIR}`);
   }
 
-  const files = fs.readdirSync(SOURCE_DIR)
-    .filter((name) => name.endsWith('.md'))
-    .sort((a, b) => a.localeCompare(b, 'en'))
-    .map((name) => path.join(SOURCE_DIR, name));
+  const files = fs.readdirSync(SOURCE_DIR, { withFileTypes: true })
+    .flatMap((entry) => {
+      if (entry.isFile() && entry.name.endsWith('.md')) {
+        return [path.join(SOURCE_DIR, entry.name)];
+      }
+
+      if (!entry.isDirectory()) {
+        return [];
+      }
+
+      const subDir = path.join(SOURCE_DIR, entry.name);
+      return fs.readdirSync(subDir, { withFileTypes: true })
+        .filter((child) => child.isFile() && child.name.endsWith('.md'))
+        .map((child) => path.join(subDir, child.name));
+    })
+    .sort((a, b) => a.localeCompare(b, 'en'));
 
   if (files.length === 0) {
     throw new Error(`在 ${SOURCE_DIR} 下未找到 .md 文件。`);
@@ -82,8 +124,14 @@ function getArticleName(sourceFile) {
   return path.basename(sourceFile, '.md');
 }
 
+function getSourceKey(sourceFile) {
+  return path.relative(SOURCE_DIR, sourceFile).replace(/\\/g, '/');
+}
+
 function getArticleOutputDir(sourceFile) {
-  return path.join(OUTPUT_DIR, getArticleName(sourceFile));
+  const relativePath = path.relative(SOURCE_DIR, sourceFile);
+  const parsedPath = path.parse(relativePath);
+  return path.join(OUTPUT_DIR, parsedPath.dir, parsedPath.name);
 }
 
 function loadStyleGuideText() {
@@ -109,10 +157,10 @@ function loadFileContextsMap() {
 
 function buildMergedScopeText(sourceFiles) {
   let mergedScopeText = '';
+  const charsPerFile = Math.max(300, Math.floor(MAX_STYLE_SOURCE_CHARS / sourceFiles.length));
   sourceFiles.forEach((filePath) => {
     const content = readUtf8(filePath);
-    const fileName = path.basename(filePath);
-    mergedScopeText += `\n\n=== 文件名: ${fileName} ===\n${content.slice(0, 5000)}`;
+    mergedScopeText += `\n\n=== 文件名: ${getSourceKey(filePath)} ===\n${content.slice(0, charsPerFile)}`;
   });
   return mergedScopeText;
 }
@@ -136,13 +184,11 @@ function generateGlobalStyleGuide(sourceFiles) {
 
   writeUtf8(initInputPath, initPrompt);
 
-  runClaude(
-    [
-      '-p',
-      `请阅读 ${toPromptPath(initInputPath)}，深度分析全局文本。请把生成的终版【术语与风格指南】直接写入 ${toPromptPath(STYLE_GUIDE_FILE)}。`,
-    ],
+  const styleGuide = runClaudeText(
+    `${initPrompt}\n\n请直接输出终版【术语与风格指南】的 Markdown 正文，不要寒暄，不要调用工具。`,
     'Style Guide Extraction'
   );
+  writeUtf8(STYLE_GUIDE_FILE, `${styleGuide}\n`);
 }
 
 function generatePerFileContexts(sourceFiles) {
@@ -156,7 +202,7 @@ function generatePerFileContexts(sourceFiles) {
     const articleOutputDir = getArticleOutputDir(sourceFile);
     ensureDir(articleOutputDir);
 
-    const sourceText = readUtf8(sourceFile);
+    const sourceText = readUtf8(sourceFile).slice(0, MAX_CONTEXT_SOURCE_CHARS);
     const summaryInputPath = path.join(articleOutputDir, 'tmp_context_input.md');
     const summaryOutputPath = path.join(articleOutputDir, '0_context_summary.md');
 
@@ -164,18 +210,15 @@ function generatePerFileContexts(sourceFiles) {
 
     writeUtf8(summaryInputPath, summaryInput);
 
-    runClaude(
-      [
-        '-p',
-        `请阅读 ${toPromptPath(summaryInputPath)}。请把结果写入 ${toPromptPath(summaryOutputPath)}。不要输出额外寒暄。`,
-      ],
+    const summaryText = runClaudeText(
+      `${summaryInput}\n\n请直接输出摘要正文，不要寒暄，不要调用工具。`,
       `Context Summary - ${articleName}`
     );
+    writeUtf8(summaryOutputPath, `${summaryText}\n`);
 
-    const summaryText = readUtf8(summaryOutputPath);
     const combinedContext = `${CONTEXT_INFO}\n\n【本篇内容摘要】\n${summaryText}\n${styleGuideText ? `\n【全局术语与风格指南（节选参考）】\n${styleGuideText}` : ''}`;
 
-    contextMap[path.basename(sourceFile)] = {
+    contextMap[getSourceKey(sourceFile)] = {
       sourceFile,
       articleName,
       summaryFile: summaryOutputPath,
@@ -188,9 +231,9 @@ function generatePerFileContexts(sourceFiles) {
 }
 
 function getContextForFile(sourceFile, globalContext, contextMap) {
-  const key = path.basename(sourceFile);
-  if (contextMap[key] && contextMap[key].combinedContext) {
-    return contextMap[key].combinedContext;
+  const contextEntry = contextMap[getSourceKey(sourceFile)] || contextMap[path.basename(sourceFile)];
+  if (contextEntry && contextEntry.combinedContext) {
+    return contextEntry.combinedContext;
   }
   return globalContext;
 }
