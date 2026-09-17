@@ -1,0 +1,1 @@
+API Error: 500 {"error":{"message":"Please check your firewall rules and network connection then try again. Error Code: net::ERR_NAME_NOT_RESOLVED.","type":"internal_server_error","log_file":"c:\\Users\\ranjin\\Pictures\\bmsg2324\\2026-09-15_21-10-42-995-debug.log"}}
