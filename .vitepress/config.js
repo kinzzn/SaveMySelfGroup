@@ -234,7 +234,10 @@ export default defineConfig({
             }
         }
 
-        return { titleTemplate: book.title }
+        return {
+            title: getDisplayName(basename(pageData.relativePath)),
+            titleTemplate: book.title
+        }
     },
     themeConfig: {
         siteTitle: false,
