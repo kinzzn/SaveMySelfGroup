@@ -217,6 +217,11 @@ const bookTitles = [
 
 export default defineConfig({
     base: '/SaveMySelfGroup/',
+    srcExclude: [
+        'scripts/**',
+        'devdoc/**',
+        'ja-jp/**'
+    ],
     lang: 'zh-CN',
     title: 'Save My Self Project',
     description: 'BMSG Archieve',
