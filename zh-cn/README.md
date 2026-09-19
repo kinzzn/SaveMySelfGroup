@@ -1,10 +1,10 @@
 # SaveMySelfGroup 项目
-存档 BMSG(=BeMySelfGroup) 中文翻译
+存档音乐类访谈、书籍的中文翻译
 
 ### 目录
 - 书籍
-  - Management2
-  - Management2Extra
-- 采访
+  - Management 2
+  - Management 2 Extra
+- 杂志
   - Rockin On Japan 2025/11
-- 视频
+- 其他

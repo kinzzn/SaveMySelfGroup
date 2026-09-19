@@ -55,6 +55,7 @@ function getDisplayName(fileName) {
         '02_MazzelGroupInterview': '团体采访',
         '03_SkyhiInterviewAboutMazzel': 'SKY-HI谈论MAZZEL',
         'gqux': '为《机动战士高达GQuuuuuuX》增添色彩的音乐',
+        'coreayumu': 'Ayumu Imazu与Novel Core对谈',
         'rollingkawatani': '川谷绘音回顾 2025 年的音乐生态',
         // 新增
         '前言': '前言',
@@ -69,7 +70,7 @@ function getDisplayName(fileName) {
 }
 
 // 生成侧边栏配置
-function generateSidebar(baseDir, prefix) {
+function generateSidebar(baseDir, prefix, flatDirectories = []) {
     function buildSidebarItems(dirPath, currentPrefix) {
         const items = getDirectoryItems(dirPath, currentPrefix)
         const result = []
@@ -78,11 +79,15 @@ function generateSidebar(baseDir, prefix) {
             if (item.isDirectory) {
                 const subItems = buildSidebarItems(item.path, item.linkPath)
                 if (subItems.length > 0) {
-                    result.push({
-                        text: item.displayName,
-                        collapsed: false,
-                        items: subItems
-                    })
+                    if (flatDirectories.includes(item.name)) {
+                        result.push(...subItems)
+                    } else {
+                        result.push({
+                            text: item.displayName,
+                            collapsed: false,
+                            items: subItems
+                        })
+                    }
                 }
             } else if (item.name.endsWith('.md') && !item.name.startsWith('README')) {
                 result.push({
@@ -101,44 +106,39 @@ function generateSidebar(baseDir, prefix) {
 // 生成导航配置
 function generateNavigation(locale) {
     const baseDir = locale === 'zh-cn' ? './zh-cn' : './ja-jp'
-    
-    const navItems = []
-    
-    // 合并Management 2相关导航为下拉菜单
-    const management2Items = []
+    const bookItems = []
+
     if (existsSync(join(baseDir, 'Management2'))) {
-        management2Items.push({
-            text: '本篇',
+        bookItems.push({
+            text: 'Management 2 本篇',
             link: `/${locale}/Management2/README`
         })
     }
-    
+
     if (existsSync(join(baseDir, 'Management2Extra'))) {
-        management2Items.push({
-            text: '增刊',
+        bookItems.push({
+            text: 'Management 2 增刊',
             link: `/${locale}/Management2Extra/README`
-        })
-    }
-    
-    if (management2Items.length > 0) {
-        navItems.push({
-            text: 'Management 2',
-            items: management2Items
-        })
-    }
-    
-    if (existsSync(join(baseDir, 'Others'))) {
-        navItems.push({
-            text: '其他',
-            link: `/${locale}/Others/README`
         })
     }
 
     if (existsSync(join(baseDir, 'RockInOnJapan_BF'))) {
-        navItems.push({
+        bookItems.push({
             text: 'RockInOnJapan BE:FIRST',
             link: `/${locale}/RockInOnJapan_BF/README`
         })
+    }
+
+    if (existsSync(join(baseDir, 'Others'))) {
+        bookItems.push({
+            text: '其他采访',
+            link: `/${locale}/Others/README`
+        })
+    }
+
+    const navItems = []
+    if (bookItems.length > 0) {
+        navItems.push({ text: '所有书目', items: bookItems })
     }
 
     navItems.push({
@@ -169,7 +169,8 @@ function generateSidebarConfig(locale) {
     if (existsSync(join(baseDir, 'Management2Extra'))) {
         const management2ExtraItems = generateSidebar(
             join(baseDir, 'Management2Extra'), 
-            `/${locale}/Management2Extra`
+            `/${locale}/Management2Extra`,
+            ['03_Chronicle', '04_EditorsNote']
         )
         if (management2ExtraItems.length > 0) {
             sidebarConfig[`/${locale}/Management2Extra/`] = [{
@@ -207,41 +208,39 @@ function generateSidebarConfig(locale) {
     return sidebarConfig
 }
 
+const bookTitles = [
+    { directory: 'zh-cn/Management2/', title: 'Management 2 本篇' },
+    { directory: 'zh-cn/Management2Extra/', title: 'Management 2 增刊' },
+    { directory: 'zh-cn/RockInOnJapan_BF/', title: 'RockInOnJapan BE:FIRST' },
+    { directory: 'zh-cn/Others/', title: '其他采访' }
+]
+
 export default defineConfig({
     base: '/SaveMySelfGroup/',
+    lang: 'zh-CN',
     title: 'Save My Self Project',
     description: 'BMSG Archieve',
     head: [
         ['link', { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' }]
     ],
-    locales: {
-        'root': {
-            locale: 'zh-CN',
-            label: '中文',
-            link: '/zh-cn/README',
-            themeConfig: {
-                nav: generateNavigation('zh-cn'),
-                sidebar: generateSidebarConfig('zh-cn')
-            }
-        },
-        'ja-jp': {
-            locale: 'ja-JP',
-            label: '日本語',
-            link: '/ja-jp/README',
-            themeConfig: {
-                nav: generateNavigation('ja-jp'),
-                sidebar: generateSidebarConfig('ja-jp')
-            }
-        },
-        'zh-cn': {
-            locale: 'zh-CN',
-            label: '中文',
-            link: '/zh-cn/README',
-            themeConfig: {
-                nav: generateNavigation('zh-cn'),
-                sidebar: generateSidebarConfig('zh-cn')
+    transformPageData(pageData) {
+        const book = bookTitles.find(({ directory }) => pageData.relativePath.startsWith(directory))
+        if (!book) return
+
+        if (pageData.relativePath === `${book.directory}README.md`) {
+            return {
+                title: book.title,
+                titleTemplate: false
             }
         }
+
+        return { titleTemplate: book.title }
+    },
+    themeConfig: {
+        siteTitle: false,
+        outline: false,
+        nav: generateNavigation('zh-cn'),
+        sidebar: generateSidebarConfig('zh-cn')
     },
     outDir: './dist'
 })
